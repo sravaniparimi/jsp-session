@@ -1,0 +1,44 @@
+<%@page import="java.sql.*"%>
+<html>
+<body bgcolor="wheat">
+<center>
+<h1>WELCOME TO DOCTOR HOME</h1>
+
+|<a href="doctor_home.html">HOME</a>|
+<a href="doctor_profile.jsp">PROFILE</a>|
+
+
+
+</center>
+<table border="2" align="center" cellpadding="30" width="60%" height="300">
+<tr><td>ID</td><td>Name</td><td>Email</td><td>phone</td><td>Specialisation</td>
+<%
+Connection con=null;
+PreparedStatement ps=null;
+Class.forName("com.mysql.jdbc.Driver");
+String url="jdbc:mysql://localhost:3306/jnit";
+String user="root";
+String pass="1234567890";
+con=DriverManager.getConnection(url,user,pass);
+	ps=con.prepareStatement("select * from doctor where name=?");
+	Object o=session.getAttribute("name");
+	String name=(String)o;
+	ps.setString(1,name);
+	ResultSet rs=ps.executeQuery();
+while(rs.next()){
+	%>
+	
+	<tr>
+	<td><%=rs.getInt(1)%></td>
+	<td><%=rs.getString(2) %></td>
+	<td><%=rs.getString(4) %></td>
+	<td><%=rs.getString(5) %></td>
+	<td><%=rs.getString(6) %></td>
+	</tr>
+	<%
+}
+	
+   %>
+   </table>
+   </body>
+   </html>
